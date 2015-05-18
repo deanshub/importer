@@ -1,0 +1,14 @@
+<div class="row">
+	<input-field>
+		<input type="text" ng-model="mainCtrl.inputFieldInput">
+		<label>File Name</label>
+	</input-field>
+
+	<div class="file-field" input-field>
+      <input class="file-path validate" type="text" ng-model="mainCtrl.inputFieldInput.name"/>
+      <div class="btn">
+        <span>Directory</span>
+        <input type="file" fileread="mainCtrl.inputFieldInput" webkitdirectory directory/>
+      </div>
+    </div>
+</div>

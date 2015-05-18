@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="importer">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<title>Importer</title>
+</head>
+<body class="light-blue lighten-4" ng-controller="mainCtrl as mainCtrl">
+	<nav class="light-blue lighten-1" role="navigation">
+		<div class="nav-wrapper">
+			<a id="logo-container" class="brand-logo">The Importer</a>	
+			<ul class="right">
+				<li><a href="#"><i class="mdi-action-help"></i></a></li>
+				<li><a href="#" ng-click="mainCtrl.close()"><i class="mdi-navigation-close"></i></a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<main>
+		<div class="row">
+			<form id="from" class="col s6">
+				<div class="row">
+					<div class="input-field col s12">
+						<select ng-model="mainCtrl.selectedSource" material-select>
+							<option value="" disabled selected>Data Source</option>
+							<option ng-repeat="datasource in mainCtrl.dataSources" value="{{datasource.name}}">{{datasource.name}}</option>
+						</select>
+						<label>From:</label>
+					</div>
+				</div>
+
+				<div ng-include="mainCtrl.getSourceForm(mainCtrl.selectedSource)"></div>
+			</form>
+
+			<form id="to" class="col s6">
+				<div class="row">
+					<div class="input-field col s12">
+						<select ng-model="mainCtrl.selectedTarget" material-select>
+							<option value="" disabled selected>Data Target</option>
+							<option ng-repeat="datatarget in mainCtrl.dataTargets" value="{{datatarget.name}}">{{datatarget.name}}</option>
+						</select>
+						<label>To:</label>
+					</div>
+				</div>
+				
+				<div ng-include="mainCtrl.getTargetForm(mainCtrl.selectedTarget)"></div>
+			</form>
+		</div>
+	</main>
+
+	<footer class="page-footer light-blue darken-2">
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="center-align">
+						<a id="execute" class="waves-effect waves-light btn-large" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script type="text/javascript" src="build/bundle.js"></script>
+</body>
+</html>
