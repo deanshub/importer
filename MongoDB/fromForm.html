@@ -1,36 +1,43 @@
 <div class="row">
 	<div class="col 10">
 		<input-field>
-			<input type="text" ng-model="mainCtrl.inputFieldInput">
-			<label>Connection URL</label>
+			<input type="text" ng-model="mainCtrl.toForm.host">
+			<label>Hostname</label>
 		</input-field>
 	</div>
 
 	<div class="col 2">
 		<input-field>
-			<input type="text" ng-model="mainCtrl.inputFieldInput">
+			<input type="text" ng-model="mainCtrl.toForm.port">
 			<label>Port</label>
 		</input-field>
 	</div>
 
 	<div class="col 6">
 		<input-field>
-			<input type="text" ng-model="mainCtrl.inputFieldInput">
+			<input type="text" ng-model="mainCtrl.toForm.db">
+			<label>DB name</label>
+		</input-field>
+	</div>
+
+	<div class="col 6">
+		<input-field>
+			<input type="text" ng-model="mainCtrl.toForm.collection">
+			<label>Collection</label>
+		</input-field>
+	</div>
+
+	<div class="col 6">
+		<input-field >
+			<input type="text" ng-model="mainCtrl.toForm.user">
 			<label>User</label>
 		</input-field>
 	</div>
 
 	<div class="col 6">
 		<input-field>
-			<input type="password" ng-model="mainCtrl.inputFieldInput">
+			<input type="password" ng-model="mainCtrl.toForm.password">
 			<label>Password</label>
-		</input-field>
-	</div>
-
-	<div class="col 12">
-		<input-field>
-			<input type="text" ng-model="mainCtrl.inputFieldInput">
-			<label>Collection</label>
 		</input-field>
 	</div>
 </div>
