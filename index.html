@@ -4,13 +4,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 	<title>Importer</title>
 </head>
-<body class="light-blue lighten-4" ng-controller="mainCtrl as mainCtrl">
-	<nav class="light-blue lighten-1" role="navigation">
+<body ng-controller="mainCtrl as mainCtrl">
+	<nav class="cyan lighten-2" role="navigation">
 		<div class="nav-wrapper">
 			<a id="logo-container" class="brand-logo">The Importer</a>	
-			<ul class="right">
+			<ul class="left">
 				<li><a href="#"><i class="mdi-action-help"></i></a></li>
-				<li><a href="#" ng-click="mainCtrl.close()"><i class="mdi-navigation-close"></i></a></li>
+			</ul>
+			<ul class="right">
+				<li><a href="#" ng-click="mainCtrl.close()"><i class="mdi-action-highlight-remove"></i></a></li>
 			</ul>
 		</div>
 	</nav>
@@ -19,7 +21,7 @@
 		<div class="row">
 			<form id="from" class="col s6">
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s12" >
 						<select ng-model="mainCtrl.selectedSource" material-select>
 							<option value="" disabled selected>Data Source</option>
 							<option ng-repeat="datasource in mainCtrl.dataSources" value="{{datasource.name}}">{{datasource.name}}</option>
@@ -47,12 +49,12 @@
 		</div>
 	</main>
 
-	<footer class="page-footer light-blue darken-2">
+	<footer class="page-footer white">
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
 					<div class="center-align">
-						<a id="execute" class="waves-effect waves-light btn-large" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
+						<a id="execute" class="waves-effect waves-light btn-large cyan lighten-2 tempThing" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
 					</div>
 				</div>
 			</div>
