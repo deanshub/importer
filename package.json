@@ -28,7 +28,7 @@
     "hammerjs": "^2.0.4",
     "jquery": "^2.1.4",
     "materialize-css": "^0.96.1",
-    "mongodb": "^2.0.31"
+    "mongoskin": "^1.4.13"
   },
   "devDependencies": {
     "css-loader": "^0.12.1",

@@ -1,7 +1,7 @@
 'use strict';
 var browser = require('./browser');
 var remote = browser.remote;
-var MongoClient = remote.require('mongodb').MongoClient;
+var mongo = remote.require('mongoskin');
 
 function mainCtrl(dataSources) {
 	var self = this;
@@ -35,7 +35,7 @@ function mainCtrl(dataSources) {
 		if (self.selectedSource==='File'){
 			if (/\.json$/i.test(self.fromForm.file.path)){
 				try{
-					imported = browser.remote.require(self.fromForm.file.path);
+					imported = remote.require(self.fromForm.file.path);
 				}catch(e){
 					console.log(e);
 					self.error = self.fromForm.file.path + ' is not a valid json file';
@@ -95,23 +95,14 @@ function mainCtrl(dataSources) {
 					return;
 				}
 
-				console.log(MongoClient.connect);
-				MongoClient.connect(url, function(err, db) {
+				var db = mongo.db(url);
+				db.collection(self.toForm.collection).insert(imported,function(err){
 					if (err){
 						self.loading = false;
-						self.error = 'Could not connect to the database';
+						self.error = 'Could not insert to the specified collection';
 						console.log(err);
 					}
-
-					db.collection(self.toForm.collection).insert(imported,function(err, result){
-						if (err) {
-							self.error = 'Could not insert to the specified collection';
-							console.log(err);
-						}
-						self.loading = false;
-
-						db.close();
-					});
+					db.close();
 				});
 			}
 		}
