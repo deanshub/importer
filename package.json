@@ -29,7 +29,8 @@
     "jquery": "^2.1.4",
     "materialize-css": "^0.96.1",
     "mongoskin": "^1.4.13",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "request": "^2.55.0"
   },
   "devDependencies": {
     "css-loader": "^0.12.1",

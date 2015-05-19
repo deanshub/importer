@@ -4,6 +4,7 @@ var remote = browser.remote;
 var mongo = remote.require('mongoskin');
 var Q = remote.require('q');
 var $ = require('jquery');
+var request = remote.require('request');
 
 function mainCtrl(dataSources, $scope) {
 	var self = this;
@@ -71,6 +72,17 @@ function mainCtrl(dataSources, $scope) {
 					// try both
 				}
 			}else if (self.selectedSource==='URL'){
+				if(self.fromForm.url){
+					request(self.fromForm.url,function(err,res,body){
+						if(!err && res.statusCode==200){
+							resolve(JSON.parse(body));
+						}else{
+							reject('Could not get information from url');
+						}
+					});
+				}else{
+					reject('The url provided isn\'t allowd');
+				}
 			}else if (self.selectedSource==='Text'){
 				// try json parsing
 				try{
@@ -103,9 +115,11 @@ function mainCtrl(dataSources, $scope) {
 					if (self.selectedTarget==='File') {
 						resolve();
 					}else if (self.selectedTarget==='Text'){						
-						$scope.$apply(function(){
-							$('#toFormText').html(JSON.stringify(imported,null,2).replace(/\n/g,'<br/>'));
-						});
+							$('#toFormText').html(JSON.stringify(imported,null,2).replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'));
+						if (!$scope.$$phase){
+							$scope.$apply();
+						}
+
 						resolve();
 					}else if (self.selectedTarget==='MongoDB'){
 						var url = getDbUrl(self.toForm);
