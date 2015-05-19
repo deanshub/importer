@@ -15,12 +15,15 @@
 
  main {
  	flex: 1 0 auto;
+ 	margin-top: 80px;
  }
 
  nav{
+ 	position: fixed;
+ 	top: 0;
  	-webkit-app-region: drag;
  	cursor:move;
- 	margin-bottom: 20px;
+ 	z-index: 10;
  }
 
  nav li{
@@ -40,4 +43,8 @@
 
 #toFormText{
 	outline:0;
+}
+
+#to{
+	height: 100%;
 }
