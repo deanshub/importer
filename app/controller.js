@@ -5,6 +5,8 @@ var mongo = remote.require('mongoskin');
 var Q = remote.require('q');
 var $ = require('jquery');
 var request = remote.require('request');
+var fs = remote.require('fs');
+var path = remote.require('path');
 
 function mainCtrl(dataSources, $scope) {
 	var self = this;
@@ -113,13 +115,17 @@ function mainCtrl(dataSources, $scope) {
 				// target handling
 				}else if (imported) {
 					if (self.selectedTarget==='File') {
-						resolve();
+						fs.writeFile(path.join(self.toForm.folder?self.toForm.folder.path:'', self.toForm.fileName), JSON.stringify(imported, null, 2),function(err){
+							if (err){
+								reject('file could not be written in this path');
+							}
+							resolve();
+						});
 					}else if (self.selectedTarget==='Text'){						
 							$('#toFormText').html(JSON.stringify(imported,null,2).replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'));
 						if (!$scope.$$phase){
 							$scope.$apply();
 						}
-
 						resolve();
 					}else if (self.selectedTarget==='MongoDB'){
 						var url = getDbUrl(self.toForm);
@@ -139,9 +145,11 @@ function mainCtrl(dataSources, $scope) {
 				}
 			});
 		}).then(function(){
-			self.loading = false;
+			self.loading=false;
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
 		}).catch(function(err){
-			console.log(err);
 			self.loading=false;
 			self.error = err;
 		})
