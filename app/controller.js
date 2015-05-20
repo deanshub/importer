@@ -62,16 +62,20 @@ function mainCtrl(dataSources, $scope) {
 		Q.promise(function(resolve,reject){
 			// source handling
 			if (self.selectedSource==='File'){
-				if (/\.json$/i.test(self.fromForm.file.path)){
-					try{
-						resolve(remote.require(self.fromForm.file.path));
-					}catch(e){
-						reject(self.fromForm.file.path + ' is not a valid json file');
+				if (self.fromForm.file){
+					if (/\.json$/i.test(self.fromForm.file.path)){
+						try{
+							resolve(remote.require(self.fromForm.file.path));
+						}catch(e){
+							reject(self.fromForm.file.path + ' is not a valid json file');
+						}
+					}else if (/\.csv$/i.test(self.fromForm.file.path)){
+						// parse csv
+					}else{
+						// try both
 					}
-				}else if (/\.csv$/i.test(self.fromForm.file.path)){
-					// parse csv
 				}else{
-					// try both
+					reject('data source is not a valid file');
 				}
 			}else if (self.selectedSource==='URL'){
 				if(self.fromForm.url){
@@ -115,12 +119,16 @@ function mainCtrl(dataSources, $scope) {
 				// target handling
 				}else if (imported) {
 					if (self.selectedTarget==='File') {
-						fs.writeFile(path.join(self.toForm.folder?self.toForm.folder.path:'', self.toForm.fileName), JSON.stringify(imported, null, 2),function(err){
-							if (err){
-								reject('file could not be written in this path');
-							}
-							resolve();
-						});
+						if (self.toForm.fileName!==''){
+							fs.writeFile(path.join(self.toForm.folder?self.toForm.folder.path:'', self.toForm.fileName), JSON.stringify(imported, null, 2),function(err){
+								if (err){
+									reject('file could not be written in the specified path');
+								}
+								resolve();
+							});
+						}else{
+							reject('data target has to be provided with a valid file name');
+						}
 					}else if (self.selectedTarget==='Text'){						
 							$('#toFormText').html(JSON.stringify(imported,null,2).replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'));
 						if (!$scope.$$phase){
@@ -146,12 +154,18 @@ function mainCtrl(dataSources, $scope) {
 			});
 		}).then(function(){
 			self.loading=false;
+			Materialize.toast('Done!', 4000, 'green');
 			if (!$scope.$$phase){
 				$scope.$apply();
 			}
 		}).catch(function(err){
 			self.loading=false;
+			console.log(err);
+			Materialize.toast(err, 4000, 'red');
 			self.error = err;
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
 		})
 	};
 
