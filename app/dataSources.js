@@ -4,6 +4,7 @@ function dataSources() {
 	return {
 		from:[
 		{name:'File'},
+		{name:'Directory'},
 		{name:'URL'},
 		{name:'MongoDB'},
 		{name:'Text'}
