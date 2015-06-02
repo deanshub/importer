@@ -14,7 +14,7 @@ function getDbUrl(connObj){
 		if (connObj.password) {
 			url+=':'+connObj.password;
 
-		}	
+		}
 		url+='@';
 	}
 
@@ -45,6 +45,16 @@ function importsExports(self, $scope){
 					}else if (/\.csv$/i.test(self.fromForm.file.path)){
 						// parse csv
 					}else{
+						try{
+							fs.readFile(self.fromForm.file.path, function(err, data){
+								if (err) {
+									reject('could not parse file as json');
+								}
+								resolve(JSON.parse(data));
+							});
+						}catch(e){
+							reject(self.fromForm.file.path + ' is not a valid json file');
+						}
 						// try both
 					}
 				}else{
@@ -57,7 +67,7 @@ function importsExports(self, $scope){
 						if(err){
 							reject('Directory in data source is not valid');
 						}
-						
+
 						files.forEach(function(file){
 							if(/\.json$/i.test(file)){
 								jsonsArr.push(remote.require(path.join(self.fromForm.folder.path, file)));
@@ -123,7 +133,7 @@ function importsExports(self, $scope){
 						}else{
 							reject('data target has to be provided with a valid file name');
 						}
-					}else if (self.selectedTarget==='Text'){						
+					}else if (self.selectedTarget==='Text'){
 						$('#toFormText').html(JSON.stringify(imported,null,2).replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'));
 						if (!$scope.$$phase){
 							$scope.$apply();
