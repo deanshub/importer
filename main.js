@@ -2,39 +2,6 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 
-/******** CLI section ********************/
-var cliArgs = require('command-line-args');
-// var importsExports= require('./app/importsExports.js');
-
-var cliError = false;
-var cli = cliArgs([
-    // { name: 'verbose', type: Boolean, alias: 'v', description: 'Write plenty output' },
-    { name: 'destenation', alias: 'd', type: String, description: 'Data target type (File/MongoDB)' },
-    { name: 'source', alias: 's', type: String, description: 'Data source type (File/Directory/URL/MongoDB)' },
-    { name: 'spath', alias: 'sp', type: String, description: 'Data source directory path' },
-    { name: 'dpath', alias: 'dp', type: String, description: 'Data target directory path' },
-    { name: 'filename', alias: 'n', type: String, description: 'File name' },
-    { name: 'user', alias: 'u', type: String, description: 'User name' },
-    { name: 'password', alias: 'p', type: String, description: 'Password' },
-    { name: 'host', alias: 'ho', type: String, description: 'Host name or IP' },
-    { name: 'port', alias: 'po', type: String, description: 'Port number' },
-    { name: 'db', type: String, description: 'DB name' },
-    { name: 'collection', alias: 'c', type: String, description: 'collection name in the DB' },
-    { name: 'help', alias: 'h', type: Boolean, description: 'Print usage instructions' }
-    ]);
-try{ 
-	var options = cli.parse();
-}catch(e){
-	cliError = true;
-}
-var usage = cli.getUsage({
-	header: 'The importer.',
-	footer: '\nFor more information, visit https://github.com/deanshub/importer'
-});
-
-/******** CLI section ********************/
-
-
 // Report crashes to our server.
 require('crash-reporter').start();
 
@@ -42,41 +9,81 @@ require('crash-reporter').start();
 // be closed automatically when the javascript object is GCed.
 var mainWindow = null;
 
-console.log(options);
-if (options&&options.help||cliError){
-	console.log(usage);
+/******** CLI section ********************/
+var importsExports= require('./app/importsExportsCli');
+
+var options = require('optimist')
+		.usage('\n\nThe importer.\nGive the flags for source and target and then strings to support them, example:\nimporter . --sf --dm "C:\\json-directory" "mongodb://user:password@127.0.0.1:27017/mydb" "mycollection" \nFor more information, visit https://github.com/deanshub/importer\n')
+		// source
+		.boolean('sf')
+		.describe('sf','Use file as the source')
+		.boolean('sd')
+		.describe('sd','Use directory as the source')
+		.boolean('su')
+		.describe('su','Use URL as the source')
+		.boolean('sm')
+		.describe('sm','Use MongoDB as the source')
+		// destination
+		.boolean('df')
+		.describe('df','Use file as the destination')
+		.boolean('dm')
+		.describe('dm','Use MongoDB as the destination')
+	    .boolean('h')
+	    .alias('h','help')
+	    .describe('h','Print usage instructions')
+		.argv;	
+
+
+if (options&&options.help){
+	console.log(require('optimist').help());
 	app.quit();
-}else if(options.source && options.destenation){
+}else if((options.sf||options.sd||options.su||options.sm) && (options.df||options.dm)){
+	var selectedSource;
+	var fromForm={};
+	var selectedTarget;
+	var toForm={};
+	var argIndex=0;
+
+	if (options.sf){
+		selectedSource='File';
+		fromForm.file={
+			path:options._[argIndex]
+		};
+		argIndex++;
+	}else if (options.sd){
+		selectedSource='Directory';
+		fromForm.folder={
+			path:options._[argIndex]
+		};
+		argIndex++;
+	}else if (options.su){
+		selectedSource='URL';
+		fromForm.url=options._[argIndex];
+		fromForm.collection=options._[argIndex+1];
+		argIndex++;
+		argIndex++;
+	}else if (options.sm){
+		selectedSource='MongoDB';
+		fromForm.url=options._[argIndex];
+		argIndex++;
+	}
+
+	if(options.df){
+		selectedTarget='File';
+		toForm.fileName=options._[argIndex];
+	}else if(options.dm){
+		selectedTarget='MongoDB';
+		toForm.url=options._[argIndex];
+		toForm.collection=options._[argIndex+1];
+	}
+
+console.log(options._);
 	var context = {
-		selectedSource:options.source,
-		selectedTarget:options.destenation,
-		fromForm:{},
-		toForm:{}
+		selectedSource:selectedSource,
+		selectedTarget:selectedTarget,
+		fromForm:fromForm,
+		toForm:toForm
 	};
-
-	if(options.source==='File'){
-		context.fromForm.file={
-			path:options.spath
-		};
-	}else if(options.source==='Directory'){
-		context.fromForm.folder={
-			path:options.spath
-		};
-	}
-
-	if(options.destenation==='File'){
-		context.toForm.folder={
-			path:options.dpath
-		};
-		context.toForm.fileName = options.filename;
-	}else if(options.destenation==='MongoDB'){
-		context.toForm.user = options.user;
-		context.toForm.password = options.password;
-		context.toForm.host = options.host;
-		context.toForm.port = options.port;
-		context.toForm.db = options.db;
-		context.toForm.collection = options.collection;
-	}
 
 	importsExports(context).then(function(){
 		console.log('All done!');
@@ -85,6 +92,8 @@ if (options&&options.help||cliError){
 		console.log(err);
 		app.quit();
 	});
+
+/******** CLI section ********************/
 }else{ 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {

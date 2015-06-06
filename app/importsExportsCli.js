@@ -1,11 +1,9 @@
 'use strict';
-var browser = require('./browser');
-var remote = browser.remote;
-var request = remote.require('request');
-var mongo = remote.require('mongoskin');
-var path = remote.require('path');
+var request = require('request');
+var mongo = require('mongoskin');
+var path = require('path');
 var $ = require('jquery');
-var fs = remote.require('fs');
+var fs = require('fs');
 
 function getDbUrl(connObj){
 	if (connObj.url){
@@ -42,7 +40,7 @@ function importsExports(self, $scope){
 				if (self.fromForm.file){
 					if (/\.json$/i.test(self.fromForm.file.path)){
 						try{
-							resolve(remote.require(self.fromForm.file.path));
+							resolve(require(self.fromForm.file.path));
 						}catch(e){
 							reject(self.fromForm.file.path + ' is not a valid json file');
 						}
@@ -74,7 +72,7 @@ function importsExports(self, $scope){
 
 						files.forEach(function(file){
 							if(/\.json$/i.test(file)){
-								jsonsArr.push(remote.require(path.join(self.fromForm.folder.path, file)));
+								jsonsArr.push(require(path.join(self.fromForm.folder.path, file)));
 							}
 						});
 
