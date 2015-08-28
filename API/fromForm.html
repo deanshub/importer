@@ -1,0 +1,213 @@
+<div class="row">
+    <h5>Choose manifest file</h5>
+	<div class="file-field" input-field>
+      <input class="file-path validate" type="text" ng-model="mainCtrl.fromForm.file.name"/>
+      <div class="btn grey lighten-2">
+        <span>manifest</span>
+        <input type="file" fileread="mainCtrl.fromForm.file" />
+      </div>
+    </div>
+    	<h5>or create one</h5>
+    <div>
+    	<a id="create-manifest" class="waves-effect waves-light btn grey lighten-2" modal href="#manifest-modal"><i class="mdi-note_add right"></i>Create manifest file</a>
+    </div>
+
+    <div id="manifest-modal" class="modal bottom-sheet modal-fixed-footer">
+    	<div class="modal-content">
+			<h4>API manifest file creation</h4>
+			<div class="row">
+				<div class="col 6">
+					<input-field>
+						<input type="text" ng-model="mainCtrl.newManifest.name">
+						<label>Name</label>
+					</input-field>
+				</div>
+				<div class="col 6">
+					<input-field>
+						<input type="text" ng-model="mainCtrl.newManifest.version">
+						<label>Version</label>
+					</input-field>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row">
+					Configuration
+				</div>
+				<div class="row">
+					<div class="col 6">
+						<input-field>
+							<input type="text" ng-model="mainCtrl.newManifest.Config.Auth_Url">
+							<label>Auth Url</label>
+						</input-field>
+					</div>
+					<div class="col 6">
+						<input-field>
+							<input type="number" ng-model="mainCtrl.newManifest.Config.TimeBetweenCalls">
+							<label>Time Between Calls</label>
+						</input-field>
+					</div>
+				</div>
+				<div class="row" ng-repeat="param in mainCtrl.newManifest.Config.Params">
+					<div class="col 6">
+						<input-field>
+							<input type="text" ng-model="param.name">
+							<label>Parameter Name</label>
+						</input-field>
+					</div>
+					<div class="col 6">
+						<input-field>
+							<input type="text" ng-model="param.value">
+							<label>Parameter Value</label>
+						</input-field>
+					</div>
+				</div>
+				<div class="row">
+					<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addParam(mainCtrl.newManifest.Config.Params)"><i class="material-icons">add</i></a>
+				</div>
+				<div class="row" ng-repeat="table in mainCtrl.newManifest.Tables">
+					<div class="row">
+						<div class="col 4">
+							<input-field>
+								<input type="text" ng-model="table.Name">
+								<label>Table Name</label>
+							</input-field>
+						</div>
+						<div class="col 4">
+							<input-field>
+								<input type="text" ng-model="table.Base_Url">
+								<label>Table Base URL</label>
+							</input-field>
+						</div>
+						<div class="col 4">
+							<input-field>
+								<input type="text" ng-model="table.DataPath">
+								<label>Table Data Path</label>
+							</input-field>
+						</div>
+					</div>
+					<div class="row">
+						<div class="row">
+							Pages
+						</div>
+						<div class="row">
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.type">
+									<label>Page Type (URL\Range)</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.nextPageURL">
+									<label>Next Page URL</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.chunkSize">
+									<label>Chunk Size</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.paramStart">
+									<label>Param Start</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.paramEnd">
+									<label>Param End</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.keepURL">
+									<label>Keep URL</label>
+								</input-field>
+							</div>
+							<div class="col 3">
+								<input-field>
+									<input type="text" ng-model="table.Pages.appendParam">
+									<label>Append Parameter</label>
+								</input-field>
+							</div>
+						</div>
+						<div class="row">
+							Table Parameters
+						</div>
+						<div class="row" ng-repeat="param in table.Params">
+							<div class="col 6">
+								<input-field>
+									<input type="text" ng-model="param.name">
+									<label>Parameter Name</label>
+								</input-field>
+							</div>
+							<div class="col 6">
+								<input-field>
+									<input type="text" ng-model="param.value">
+									<label>Parameter Value</label>
+								</input-field>
+							</div>
+						</div>
+						<div class="row">
+							<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addParam(table.Params)"><i class="material-icons">add</i></a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addTable(mainCtrl.newManifest.Tables)"><i class="material-icons">add</i></a>
+					Add Table
+				</div>
+			</div>
+			<div class="row">
+				<div class="col 6">
+					<input-field>
+						<input type="text" ng-model="mainCtrl.newManifest.fileName">
+						<label>File Name</label>
+					</input-field>
+				</div>
+
+				<div class="col 6">
+					<div class="file-field" input-field>
+						<input class="file-path validate" type="text" ng-model="mainCtrl.newManifest.directory.name"/>
+						<div class="btn grey lighten-1">
+							<span>Directory</span>
+							<input type="file" fileread="mainCtrl.newManifest.directory" webkitdirectory directory/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 
+			name
+			version
+			Config
+				Auth_Url
+				Params
+					name:value
+					name:value
+					...
+				TimeBetweenCalls
+			Tables
+				Name
+				Base_Url
+				Params
+					name:value
+					...
+				Pages
+					type:URL\RANGE
+					nextPageURL
+					chunkSize
+					paramStart
+					paramEnd
+					keepURL
+					appendParam
+				DataPath
+			-->
+		</div>
+		<div class="modal-footer">
+			<a href="#!" ng-click="mainCtrl.createManifest()" class="modal-action modal-close waves-effect waves-green btn-flat">Create manifest file</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+		</div>
+    </div>
+</div>
