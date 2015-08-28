@@ -4,15 +4,16 @@
   font-weight: 300;
   src: local('Ubuntu Light'), local('Ubuntu-Light'), url(ubuntu.woff2) format('woff2');
   unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
-}*/
-@font-face {
-  font-family: 'NMDF';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/Material-Icons.woff2') format('woff2');
-}
+  }
+  */
+  @font-face {
+	font-family: 'NMDF';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/Material-Icons.woff2') format('woff2');
+  }
 
-.material-icons{
+  .material-icons{
 	font-family: 'NMDF';
 	font-weight: normal;
 	font-style: normal;
@@ -24,50 +25,47 @@
 	word-wrap: normal;
 	-webkit-font-feature-settings: 'liga';
 	-webkit-font-smoothing: antialiased;
-}
+  }
 
- body {
- 	display: flex;
- 	min-height: 100vh;
- 	flex-direction: column;
- 	-webkit-user-select: none;
- 	/*font-family: 'Ubuntu';*/
- }
+  body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	-webkit-user-select: none;
+	/*font-family: 'Ubuntu';*/
+  }
 
- main {
- 	flex: 1 0 auto;
- 	margin-top: 80px;
- }
+  main {
+	flex: 1 0 auto;
+	margin-top: 80px;
+  }
 
- nav{
- 	position: fixed;
- 	top: 0;
- 	-webkit-app-region: drag;
- 	cursor:move;
- 	z-index: 10;
- }
+  nav{
+	position: fixed;
+	top: 0;
+	-webkit-app-region: drag;
+	cursor:move;
+	z-index: 10;
+  }
 
- nav li{
- 	-webkit-app-region: no-drag;
- 	cursor:pointer;
- }
- 
- #execute{
- 	-webkit-app-region: no-drag;
- 	cursor:pointer;
- }
-
- footer{
- 	-webkit-app-region: drag;
- 	cursor:move;
- }
-
-#toFormText{
+  nav li{
+	-webkit-app-region: no-drag;
+	cursor:pointer;
+  }
+  
+  #execute{
+	-webkit-app-region: no-drag;
+	cursor:pointer;
+  }
+  
+  #toFormText{
 	outline:0;
-}
+  }
 
-#to{
+  #to{
 	height: 100%;
-}#create-manifest{
+  }
+
+  }#create-manifest{
 	z-index: 0;
-}
+  }
