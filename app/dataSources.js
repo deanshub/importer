@@ -5,14 +5,13 @@ function dataSources() {
 		from:[
 		{name:'File'},
 		{name:'Directory'},
-		{name:'URL'},
-		{name:'MongoDB'},
-		{name:'Text'}
+		{name:'API'},		{name:'MongoDB'},
+		{name:'Text'},
 		],
 		to:[
 		{name:'MongoDB'},
 		{name:'File'},
-		{name:'Text'}
+		{name:'Text'},
 		]
 	};
 }

@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 	<title>Importer</title>
 </head>
-<body ng-controller="mainCtrl as mainCtrl">
+<body ng-controller="mainCtrl as mainCtrl" ng-cloak ng-Keyup="mainCtrl.keyPressed($event)">
 	<nav class="cyan lighten-2" role="navigation">
 		<div class="nav-wrapper">
 			<a id="logo-container" class="brand-logo">The Importer</a>	
@@ -57,7 +57,7 @@
 				</div>
 				<div class="col s12">
 					<div class="center-align">
-						<a id="execute" class="waves-effect waves-light btn-large cyan lighten-2 tempThing" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
+						<a id="execute" class="waves-effect waves-light btn-large cyan lighten-2" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
 					</div>
 				</div>
 			</div>
