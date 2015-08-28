@@ -1,10 +1,10 @@
 'use strict';
 var browser = require('./browser');
-var $ = require('jquery');
+var importsExports= require('./importsExports.js');
 var fs = browser.remote.require('fs');
 var path = browser.remote.require('path');
 
-function mainCtrl(dataSources) {
+function mainCtrl(dataSources, $scope) {
 	var self = this;
 	var tableTemplate = {
 				Name:'',
@@ -42,6 +42,9 @@ function mainCtrl(dataSources) {
 		};
 
 	function init(){
+		self.loading = false;
+		self.toForm={};
+		self.fromForm={};
 
 		self.dataSources = dataSources.from;
 		self.dataTargets = dataSources.to;
@@ -62,13 +65,26 @@ function mainCtrl(dataSources) {
 		return target +'/fromForm.html';
 	};
 
+	
+
 	self.importer = function(){
-		// if (self.selectedSource==='File'){
-		// 	self.fromForm.file
-		// }
-		// self.selectedTarget
-		console.log(JSON.stringify(self.fromForm));
-		console.log(JSON.stringify(self.toForm));
+		self.loading = true;
+
+		importsExports(self, $scope).then(function(){
+			self.loading=false;
+			Materialize.toast('Done!', 4000, 'green');
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
+		}).catch(function(err){
+			self.loading=false;
+			console.log(err);
+			Materialize.toast(err, 4000, 'red');
+			self.error = err;
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
+		});
 		$('.modal-trigger').leanModal();
 	};
 
@@ -132,6 +148,7 @@ function mainCtrl(dataSources) {
 }
 
 module.exports = [
-	'dataSources',
-	mainCtrl
+'dataSources',
+'$scope',
+mainCtrl
 ];
