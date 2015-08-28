@@ -1,14 +1,17 @@
 'use strict';
 var browser = require('./browser');
-var $ = require('jquery');
+var importsExports= require('./importsExports.js');
 
-function mainCtrl(dataSources, $timeout) {
+function mainCtrl(dataSources, $scope) {
 	var self = this;
 
 	function init(){
+		self.loading = false;
+		self.toForm={};
+		self.fromForm={};
+
 		self.dataSources = dataSources.from;
 		self.dataTargets = dataSources.to;
-
 	}
 
 	self.close = function(){
@@ -23,20 +26,35 @@ function mainCtrl(dataSources, $timeout) {
 		return target+'/fromForm.html';
 	};
 
+	
+
 	self.importer = function(){
-		// if (self.selectedSource==='File'){
-		// 	self.fromForm.file
-		// }
-		// self.selectedTarget
-		console.log(JSON.stringify(self.fromForm));
-		console.log(JSON.stringify(self.toForm));
+		self.loading = true;
+
+		importsExports(self, $scope).then(function(){
+			self.loading=false;
+			Materialize.toast('Done!', 4000, 'green');
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
+		}).catch(function(err){
+			self.loading=false;
+			console.log(err);
+			Materialize.toast(err, 4000, 'red');
+			self.error = err;
+			if (!$scope.$$phase){
+				$scope.$apply();
+			}
+		});
 	};
+
+	
 
 	init();
 }
 
 module.exports = [
-	'dataSources',
-	'$timeout',
-	mainCtrl
+'dataSources',
+'$scope',
+mainCtrl
 ];

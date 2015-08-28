@@ -10,17 +10,21 @@
  	display: flex;
  	min-height: 100vh;
  	flex-direction: column;
+ 	-webkit-user-select: none;
  	/*font-family: 'Ubuntu';*/
  }
 
  main {
  	flex: 1 0 auto;
+ 	margin-top: 80px;
  }
 
  nav{
+ 	position: fixed;
+ 	top: 0;
  	-webkit-app-region: drag;
  	cursor:move;
- 	margin-bottom: 20px;
+ 	z-index: 10;
  }
 
  nav li{
@@ -38,3 +42,10 @@
  	cursor:move;
  }
 
+#toFormText{
+	outline:0;
+}
+
+#to{
+	height: 100%;
+}

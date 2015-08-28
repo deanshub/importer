@@ -52,6 +52,9 @@
 	<footer class="page-footer white">
 		<div class="container">
 			<div class="row">
+				<div class="progress" ng-show="mainCtrl.loading">
+					<div class="indeterminate"></div>
+				</div>
 				<div class="col s12">
 					<div class="center-align">
 						<a id="execute" class="waves-effect waves-light btn-large cyan lighten-2 tempThing" href="#" ng-click="mainCtrl.importer()"><i class="mdi-action-swap-horiz right"></i>Do your thing</a>
