@@ -4,14 +4,14 @@ function dataSources() {
 	return {
 		from:[
 		{name:'File'},
-		{name:'URL'},
+		{name:'API'},
 		{name:'MongoDB'},
-		{name:'Text'}
+		{name:'Text'},
 		],
 		to:[
 		{name:'MongoDB'},
 		{name:'File'},
-		{name:'Text'}
+		{name:'Text'},
 		]
 	};
 }

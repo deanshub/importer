@@ -15,7 +15,8 @@ module.exports = {
 		{ test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: 'file?name=assets/[name].[ext]' },
 		{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: 'url?limit=10000&minetype=image/svg+xml&name=assets/[name].[ext]' },
 		{ test: /materialize\.js$/,    loader: 'imports?jQuery=jquery&$=jquery&Hammer=hammerjs' },
-		{ test: /angular-materialize\.js$/,    loader: 'imports?angular' }
+		{ test: /angular-materialize\.js$/,    loader: 'imports?angular' },
+		{ test: /\.html$/,    loader: 'file?name=assets/[name].[ext]' },
 		
 		],
 		noParse:/browser\.js$/

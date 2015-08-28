@@ -1,5 +1,28 @@
 (function (angular) {
-    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin"]);
+    angular.module("ui.materialize", ["ui.materialize.ngModel", "ui.materialize.collapsible", "ui.materialize.toast", "ui.materialize.sidenav", "ui.materialize.material_select", "ui.materialize.dropdown", "ui.materialize.inputfield", "ui.materialize.input_date", "ui.materialize.tabs", "ui.materialize.pagination", "ui.materialize.pushpin", "ui.materialize.modal"]);
+
+    angular.module("ui.materialize.modal", [])
+        .directive("modal", ["$compile", "$timeout", function ($compile, $timeout) {
+            return {
+                scope: {
+                    dismissible: "=",
+                    opacity: "@",
+                    inDuration: "@",
+                    outDuration: "@"
+                },
+                link: function (scope, element, attrs) {
+                    $compile(element.contents())(scope);
+                    $timeout(function () {
+                        element.leanModal({
+                            dismissible: (angular.isDefined(scope.dismissible)) ? scope.dismissible : undefined,
+                            opacity: (angular.isDefined(scope.opacity)) ? scope.opacity : undefined,
+                            in_duration: (angular.isDefined(scope.inDuration)) ? scope.inDuration : undefined,
+                            out_duration: (angular.isDefined(scope.outDuration)) ? scope.outDuration : undefined
+                        });
+                    });
+                }
+            };
+        }]);
 
     angular.module("ui.materialize.ngModel", [])
         .directive("ngModel",["$timeout", function($timeout){
@@ -173,6 +196,9 @@
                 link: function (scope, element) {
                     $timeout(function () {
                         angular.element(element).find("input").change();
+                    });
+                    $(element).click(function(){
+                            angular.element(element).find("input").focus(); 
                     });
                 },
                 template: '<div ng-transclude class="input-field"></div>'
