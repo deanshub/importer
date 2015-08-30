@@ -52,12 +52,12 @@
 	-webkit-app-region: no-drag;
 	cursor:pointer;
   }
-  
+
   #execute{
 	-webkit-app-region: no-drag;
 	cursor:pointer;
   }
-  
+
   #toFormText{
 	outline:0;
   }
@@ -68,4 +68,11 @@
 
   }#create-manifest{
 	z-index: 0;
+  }
+
+  .modal.bottom-sheet {
+  max-height: 95% !important;
+  }
+  .modal.modal-fixed-footer {
+  height: 95% !important;
   }
