@@ -1,5 +1,5 @@
 <div class="row">
-    <h5>Choose manifest file</h5>
+    <!-- <h5>Choose manifest file</h5> -->
 	<div class="file-field" input-field>
       <input class="file-path validate" type="text" ng-model="mainCtrl.fromForm.file.name"/>
       <div class="btn grey lighten-2">
@@ -7,7 +7,8 @@
         <input type="file" fileread="mainCtrl.fromForm.file" />
       </div>
     </div>
-    	<h5>or create one</h5>
+    <!-- <h5>or create one</h5> -->
+    	<h5>OR</h5>
     <div>
     	<a id="create-manifest" class="waves-effect waves-light btn grey lighten-2" modal href="#manifest-modal"><i class="mdi-note_add right"></i>Create manifest file</a>
     </div>
@@ -62,101 +63,111 @@
 					</div>
 				</div>
 				<div class="row">
-					<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addParam(mainCtrl.newManifest.Config.Params)"><i class="material-icons">add</i></a>
+					<a class="btn-floating btn waves-effect waves-light cyan lighten-2" ng-click="mainCtrl.addParam(mainCtrl.newManifest.Config.Params)"><i class="material-icons">add</i></a>
+          Add Parameter
 				</div>
-				<div class="row" ng-repeat="table in mainCtrl.newManifest.Tables">
-					<div class="row">
-						<div class="col 4">
-							<input-field>
-								<input type="text" ng-model="table.Name">
-								<label>Table Name</label>
-							</input-field>
-						</div>
-						<div class="col 4">
-							<input-field>
-								<input type="text" ng-model="table.Base_Url">
-								<label>Table Base URL</label>
-							</input-field>
-						</div>
-						<div class="col 4">
-							<input-field>
-								<input type="text" ng-model="table.DataPath">
-								<label>Table Data Path</label>
-							</input-field>
-						</div>
-					</div>
-					<div class="row">
-						<div class="row">
-							Pages
-						</div>
-						<div class="row">
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.type">
-									<label>Page Type (URL\Range)</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.nextPageURL">
-									<label>Next Page URL</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.chunkSize">
-									<label>Chunk Size</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.paramStart">
-									<label>Param Start</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.paramEnd">
-									<label>Param End</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.keepURL">
-									<label>Keep URL</label>
-								</input-field>
-							</div>
-							<div class="col 3">
-								<input-field>
-									<input type="text" ng-model="table.Pages.appendParam">
-									<label>Append Parameter</label>
-								</input-field>
-							</div>
-						</div>
-						<div class="row">
-							Table Parameters
-						</div>
-						<div class="row" ng-repeat="param in table.Params">
-							<div class="col 6">
-								<input-field>
-									<input type="text" ng-model="param.name">
-									<label>Parameter Name</label>
-								</input-field>
-							</div>
-							<div class="col 6">
-								<input-field>
-									<input type="text" ng-model="param.value">
-									<label>Parameter Value</label>
-								</input-field>
-							</div>
-						</div>
-						<div class="row">
-							<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addParam(table.Params)"><i class="material-icons">add</i></a>
-						</div>
-					</div>
-				</div>
+
+        <ul class="collapsible popout" data-collapsible="accordion" watch>
+  				<li ng-repeat="table in mainCtrl.newManifest.Tables">
+            <div class="collapsible-header"><i class="material-icons">tab</i>Table #{{$index + 1}}</div>
+            <div class="collapsible-body container">
+    					<div class="row">
+    						<div class="col 4">
+    							<input-field>
+    								<input type="text" ng-model="table.Name">
+    								<label>Table Name</label>
+    							</input-field>
+    						</div>
+    						<div class="col 4">
+    							<input-field>
+    								<input type="text" ng-model="table.Base_Url">
+    								<label>Table Base URL</label>
+    							</input-field>
+    						</div>
+    						<div class="col 4">
+    							<input-field>
+    								<input type="text" ng-model="table.DataPath">
+    								<label>Table Data Path</label>
+    							</input-field>
+    						</div>
+    					</div>
+    					<div class="row">
+    						<div class="row">
+    							Pages
+    						</div>
+    						<div class="row">
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.type">
+    									<label>Page Type</label>
+                      <!-- (URL\Range) -->
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.nextPageURL">
+    									<label>Next Page URL</label>
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.chunkSize">
+    									<label>Chunk Size</label>
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.paramStart">
+    									<label>Param Start</label>
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.paramEnd">
+    									<label>Param End</label>
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.keepURL">
+    									<label>Keep URL</label>
+    								</input-field>
+    							</div>
+    							<div class="col 3">
+    								<input-field>
+    									<input type="text" ng-model="table.Pages.appendParam">
+    									<label>Append Parameter</label>
+    								</input-field>
+    							</div>
+    						</div>
+    						<div class="row">
+    							Table Parameters
+    						</div>
+    						<div class="row" ng-repeat="param in table.Params">
+    							<div class="col 6">
+    								<input-field>
+    									<input type="text" ng-model="param.name">
+    									<label>Parameter Name</label>
+    								</input-field>
+    							</div>
+    							<div class="col 6">
+    								<input-field>
+    									<input type="text" ng-model="param.value">
+    									<label>Parameter Value</label>
+    								</input-field>
+    							</div>
+    						</div>
+    						<div class="row">
+    							<a class="btn-floating btn waves-effect waves-light cyan lighten-2" ng-click="mainCtrl.addParam(table.Params)"><i class="material-icons">add</i></a>
+                  Add Parameter
+    						</div>
+    					</div>
+            </div>
+  				</li>
+        </ul>
+
 				<div class="row">
-					<a class="btn-floating btn waves-effect waves-light grey" ng-click="mainCtrl.addTable(mainCtrl.newManifest.Tables)"><i class="material-icons">add</i></a>
+					<a class="btn-floating btn waves-effect waves-light cyan lighten-2" ng-click="mainCtrl.addTable(mainCtrl.newManifest.Tables)"><i class="material-icons">add</i></a>
 					Add Table
 				</div>
 			</div>
@@ -178,7 +189,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- 
+			<!--
 			name
 			version
 			Config

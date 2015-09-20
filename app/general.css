@@ -71,8 +71,8 @@
   }
 
   .modal.bottom-sheet {
-  max-height: 95% !important;
+  max-height: 90% !important;
   }
   .modal.modal-fixed-footer {
-  height: 95% !important;
+  height: 90% !important;
   }
